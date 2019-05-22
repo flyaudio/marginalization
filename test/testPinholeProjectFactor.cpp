@@ -35,9 +35,9 @@ int main(){
 
     // simulate
 
-    Eigen::Isometry3d T_WI0, T_WI1, T_IC;
-    Eigen::Vector3d C0p(4, 3, 10);
-    T_WI0 = T_WI1 = T_IC = Eigen::Isometry3d::Identity();
+    Eigen::Isometry3d T_WI0, T_WI1, T_IC;//4*4 欧式变化,即R|t
+    Eigen::Vector3d C0p(4, 3, 10);//point in C0 coordinate
+    T_WI0 = T_WI1 = T_IC = Eigen::Isometry3d::Identity();//单位矩阵
 
     T_WI1.matrix().topRightCorner(3,1) = Eigen::Vector3d(1,0,0);
     T_IC.matrix().topRightCorner(3,1) = Eigen::Vector3d(0.1,0.10,0);
@@ -49,11 +49,12 @@ int main(){
     Eigen::Isometry3d T_C0C1 = T_WC0.inverse()*T_WC1;
     Eigen::Isometry3d T_C1C0 = T_C0C1.inverse();
 
+    //transform p point C0 -> C1
     Eigen::Vector3d C1p = T_C1C0.matrix().topLeftCorner(3,3)*C0p+T_C1C0.matrix().topRightCorner(3,1);
 
-    Eigen::Vector3d p0(C0p(0)/C0p(2), C0p(1)/C0p(2), 1);
+    Eigen::Vector3d p0(C0p(0)/C0p(2), C0p(1)/C0p(2), 1);//相机归一化坐标
     double z = C0p(2);
-    double rho = 1.0/z;
+    double rho = 1.0/z;//逆深度 ??????
 
     Eigen::Vector3d p1(C1p(0)/C1p(2), C1p(1)/C1p(2), 1);
 
@@ -74,7 +75,7 @@ int main(){
     double* param_rho;
 
 
-    T2double(T_WI0,param_T_WI0);
+    T2double(T_WI0,param_T_WI0);//Eigen 2 double
     T2double(T_WI1,param_T_WI1);
     T2double(T_IC,param_T_IC);
     param_rho = &rho;

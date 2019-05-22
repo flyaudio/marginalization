@@ -39,6 +39,8 @@ public:
     typedef Eigen::Matrix<double, 2, 6> jacobian0_t;
 
     PinholeProjectFactor() = delete;
+
+	//constructor; 赋值
     PinholeProjectFactor(const Eigen::Vector3d& uv_C0,
                        const Eigen::Vector3d& uv_C1);
 

@@ -78,7 +78,7 @@ int main(){
 
     double* paramters[2] = {param_T_WC0, Wp.data()};
 
-    Eigen::Matrix<double, 2,1> residual;
+    Eigen::Matrix<double, 2,1> residual;//x,y ,so size = 2*1
 
     Eigen::Matrix<double,2,6,Eigen::RowMajor> jacobian0_min;
     Eigen::Matrix<double,2,3,Eigen::RowMajor> jacobian1_min;
